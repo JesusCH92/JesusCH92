@@ -10,8 +10,6 @@ session_start(); // ! Iniciamos la sesion
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
-echo getenv('DB_HOST');
-die;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Aura\Router\RouterContainer;
