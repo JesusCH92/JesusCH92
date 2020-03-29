@@ -33,7 +33,7 @@
             {% for job in jobs %}
                 <div class="row work-position">
                     <div class="col-3">
-                        <img src="{{ job.image }}" alt="">
+                        <img src="{{ job.getImage(job.title) }}" alt="" height="50" width="50">
                     </div>
                     <div class="col">
                         <h5>{{ job.title }}</h5>

@@ -89,8 +89,8 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
                     <div class=\"col-3\">
                         <img src=\"";
             // line 36
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["job"], "image", [], "any", false, false, false, 36), "html", null, true);
-            echo "\" alt=\"\">
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["job"], "getImage", [0 => twig_get_attribute($this->env, $this->source, $context["job"], "title", [], "any", false, false, false, 36)], "method", false, false, false, 36), "html", null, true);
+            echo "\" alt=\"\" height=\"50\" width=\"50\">
                     </div>
                     <div class=\"col\">
                         <h5>";
@@ -103,7 +103,7 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
             echo "</p>
                     </div>
                 </div>
-                
+
             ";
         }
         $_parent = $context['_parent'];
@@ -209,14 +209,14 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
             {% for job in jobs %}
                 <div class=\"row work-position\">
                     <div class=\"col-3\">
-                        <img src=\"{{ job.image }}\" alt=\"\">
+                        <img src=\"{{ job.getImage(job.title) }}\" alt=\"\" height=\"50\" width=\"50\">
                     </div>
                     <div class=\"col\">
                         <h5>{{ job.title }}</h5>
                         <p>{{ job.description }}</p>
                     </div>
                 </div>
-                
+
             {% endfor %}
           </ul>
         </div>

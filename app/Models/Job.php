@@ -1,13 +1,12 @@
 <?php
 namespace App\Models;
-/*
-* tampoco hace falta indicar la clase padre, ya que composer lo hará
-require_once 'BaseElement.php'; // !Incluimos la clase padre
-*/
+
+use App\Traits\HasDefaultImage;
 use Illuminate\Database\Eloquent\Model;
 
 
 class Job extends Model{
+    use HasDefaultImage;
     protected $table = 'jobs';  // ? Nombre de nuestra tabla en nuestra bbdd
 
 
