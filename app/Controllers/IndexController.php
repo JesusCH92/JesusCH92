@@ -12,15 +12,16 @@ class IndexController extends BaseController{
         $projects = [
             $project1
         ];
-        $limitMonth = 15;
-        $fiterFunction = function (array $job) use ($limitMonth){
-            return $job['months'] >= $limitMonth;
-        };
-
-        $jobs = array_filter($jobs->toArray(), $fiterFunction);
+//        $limitMonth = 15;
+//        $fiterFunction = function (array $job) use ($limitMonth){
+//            return $job['months'] >= $limitMonth;
+//        };
+//
+//        $jobs = array_filter($jobs->toArray(), $fiterFunction);
 
         $lastName = "CH";
         $name = "Jesús $lastName";
+//        var_dump($jobs);exit;
 
         return $this->renderHTML('index.twig', [
             'name' => $name,
