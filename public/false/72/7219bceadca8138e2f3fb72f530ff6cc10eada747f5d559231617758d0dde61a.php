@@ -85,20 +85,31 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
         $context['_seq'] = twig_ensure_traversable(($context["jobs"] ?? null));
         foreach ($context['_seq'] as $context["_key"] => $context["job"]) {
             // line 34
-            echo "                <li class=\"work-position\">";
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["job"], "title", [], "any", false, false, false, 34), "html", null, true);
-            echo "</li>
-                <h5>";
-            // line 35
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["job"], "description", [], "any", false, false, false, 35), "html", null, true);
+            echo "                <div class=\"row work-position\">
+                    <div class=\"col-3\">
+                        <img src=\"";
+            // line 36
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["job"], "image", [], "any", false, false, false, 36), "html", null, true);
+            echo "\" alt=\"\">
+                    </div>
+                    <div class=\"col\">
+                        <h5>";
+            // line 39
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["job"], "title", [], "any", false, false, false, 39), "html", null, true);
             echo "</h5>
-                <p></p>
+                        <p>";
+            // line 40
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["job"], "description", [], "any", false, false, false, 40), "html", null, true);
+            echo "</p>
+                    </div>
+                </div>
+                
             ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['job'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 38
+        // line 45
         echo "          </ul>
         </div>
         <div>
@@ -158,7 +169,7 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
 
     public function getDebugInfo()
     {
-        return array (  102 => 38,  93 => 35,  88 => 34,  84 => 33,  57 => 9,  50 => 4,  46 => 3,  35 => 1,);
+        return array (  113 => 45,  102 => 40,  98 => 39,  92 => 36,  88 => 34,  84 => 33,  57 => 9,  50 => 4,  46 => 3,  35 => 1,);
     }
 
     public function getSourceContext()
@@ -196,9 +207,16 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
           <h3 class=\"border-bottom-gray\" >Work Experience</h3>
           <ul>
             {% for job in jobs %}
-                <li class=\"work-position\">{{ job.title }}</li>
-                <h5>{{ job.description }}</h5>
-                <p></p>
+                <div class=\"row work-position\">
+                    <div class=\"col-3\">
+                        <img src=\"{{ job.image }}\" alt=\"\">
+                    </div>
+                    <div class=\"col\">
+                        <h5>{{ job.title }}</h5>
+                        <p>{{ job.description }}</p>
+                    </div>
+                </div>
+                
             {% endfor %}
           </ul>
         </div>
