@@ -13,8 +13,13 @@ $dotenv->load();
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Aura\Router\RouterContainer;
+use WoohooLabs\Harmony\Harmony;
+use WoohooLabs\Harmony\Middleware\LaminasEmitterMiddleware;
+use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
+use Zend\Diactoros\Response;
+use WoohooLabs\Harmony\Middleware\DispatcherMiddleware;
 
-use App\Models\Job;
+
 $container = new DI\Container();    // ! Contenedor de inyeccion de dependecias
 $capsule = new Capsule;
 
@@ -53,48 +58,48 @@ $routerContainer = new RouterContainer();
 $map = $routerContainer->getMap();
 //! $map->get('index', '/primer-proyecto-php/', '../index.php');
 $map->get('index', '/primer-proyecto-php/', [
-    'controller' => 'App\Controllers\IndexController',
-    'action' => 'indexAction'
+    'App\Controllers\IndexController',
+    'indexAction'
 ]);
 $map->get('indexJobs', '/primer-proyecto-php/jobs', [
-    'controller' => 'App\Controllers\JobsController',
-    'action' => 'indexAction'
+    'App\Controllers\JobsController',
+    'indexAction'
 ]);
 $map->get('addJobs', '/primer-proyecto-php/jobs/delete', [
-    'controller' => 'App\Controllers\JobsController',
-    'action' => 'deleteAction'
+    'App\Controllers\JobsController',
+    'deleteAction'
 ]);
 $map->get('deleteJobs', '/primer-proyecto-php/jobs', [
-    'controller' => 'App\Controllers\JobsController',
-    'action' => 'indexAction'
+    'App\Controllers\JobsController',
+    'indexAction'
 ]);
 $map->post('saveJobs', '/primer-proyecto-php/jobs/add', [
-    'controller' => 'App\Controllers\JobsController',
-    'action' => 'getAddjobAction'
+    'App\Controllers\JobsController',
+    'getAddjobAction'
 ]);
 $map->get('addUser', '/primer-proyecto-php/users/add', [
-    'controller' => 'App\Controllers\UsersController',
-    'action' => 'getAddUser'
+    'App\Controllers\UsersController',
+    'getAddUser'
 ]);
 $map->post('saveUser', '/primer-proyecto-php/users/save', [
-    'controller' => 'App\Controllers\UsersController',
-    'action' => 'postSaveUser'
+    'App\Controllers\UsersController',
+    'postSaveUser'
 ]);
 $map->get('loginForm', '/primer-proyecto-php/login', [
-    'controller' => 'App\Controllers\AuthController',
+    'App\Controllers\AuthController',
     'action' => 'getLogin'
 ]);
 $map->get('logout', '/primer-proyecto-php/logout', [
-    'controller' => 'App\Controllers\AuthController',
-    'action' => 'getLogout'
+    'App\Controllers\AuthController',
+    'getLogout'
 ]);
 $map->post('auth', '/primer-proyecto-php/auth', [
-    'controller' => 'App\Controllers\AuthController',
-    'action' => 'postLogin'
+    'App\Controllers\AuthController',
+    'postLogin'
 ]);
 $map->get('admin', '/primer-proyecto-php/admin', [
-    'controller' => 'App\Controllers\AdminController',
-    'action' => 'getIndex',
+    'App\Controllers\AdminController',
+    'getIndex',
     'auth' => true
 ]);
 
@@ -105,34 +110,23 @@ $route = $matcher->match($request);
 if(!$route){
     echo 'No route!!';
 }else{
-    $handlerData = $route->handler;
-// *array(2) { ["controller"]=> string(31) "App\Controllers\IndexController" ["action"]=> string(11) "indexAction" } 
-    $controllerName = $handlerData['controller'];
-    $actionName = $handlerData['action'];
-    $needsAuth = $handlerData['auth'] ?? false; // !Si existe 'auth'
-    
-    $sesionUserId = $_SESSION['userId'] ?? false;
-    var_dump($sesionUserId);    // ! Verificando la sesion
-    if ($needsAuth && !$sesionUserId) {
-        echo 'Protected route';
-        die;
-    }
-
-//    if ($controllerName === 'App\Controllers\JobsController') {
-//        $controller = new $controllerName(new \App\Services\JobService());
-//    } else {
-//        $controller = new $controllerName;
+//    $handlerData = $route->handler;
+//// *array(2) { ["controller"]=> string(31) "App\Controllers\IndexController" ["action"]=> string(11) "indexAction" }
+//    $controllerName = $handlerData['controller'];
+//    $actionName = $handlerData['action'];
+//    $needsAuth = $handlerData['auth'] ?? false; // !Si existe 'auth'
+//
+//    $sesionUserId = $_SESSION['userId'] ?? false;
+//    var_dump($sesionUserId);    // ! Verificando la sesion
+//    if ($needsAuth && !$sesionUserId) {
+//        echo 'Protected route';
+//        die;
 //    }
-    $controller = $container->get($controllerName);
-    
+    $harmony = new Harmony($request, new Response());
+    $harmony
+        ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
+        ->addMiddleware(new \Middlewares\AuraRouter($routerContainer))
+        ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
+        ->run();
 
-    $response = $controller->$actionName($request);
-
-    foreach($response->getHeaders() as $name => $values){
-        foreach($values as $value){
-            header(sprintf('%s: %s', $name, $value), false);
-        }
-    }
-    http_response_code($response->getStatusCode());
-    echo $response->getBody();
 }

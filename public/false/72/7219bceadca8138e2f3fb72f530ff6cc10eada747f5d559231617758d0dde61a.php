@@ -48,7 +48,7 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
         $macros = $this->macros;
         // line 4
         echo "    <div id=\"resume-header\" class=\"row\">
-      <div class=\"col-3\">
+      <div class=\"col-5\">
         <img id=\"profile-picture\" src=\"https://ui-avatars.com/api/?name=John+Chase&size=255\" alt=\"\">
       </div>
       <div class=\"col\">
@@ -178,7 +178,7 @@ class __TwigTemplate_faff1f6eba4b900c2d4fd5de71747f722f96290ecd2dbb2f272c6682da3
 
 {% block content %}
     <div id=\"resume-header\" class=\"row\">
-      <div class=\"col-3\">
+      <div class=\"col-5\">
         <img id=\"profile-picture\" src=\"https://ui-avatars.com/api/?name=John+Chase&size=255\" alt=\"\">
       </div>
       <div class=\"col\">
