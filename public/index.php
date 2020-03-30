@@ -15,7 +15,7 @@ use Illuminate\Database\Capsule\Manager as Capsule;
 use Aura\Router\RouterContainer;
 
 use App\Models\Job;
-
+$container = new DI\Container();    // ! Contenedor de inyeccion de dependecias
 $capsule = new Capsule;
 
 $capsule->addConnection([
@@ -56,9 +56,17 @@ $map->get('index', '/primer-proyecto-php/', [
     'controller' => 'App\Controllers\IndexController',
     'action' => 'indexAction'
 ]);
-$map->get('addJobs', '/primer-proyecto-php/jobs/add', [
+$map->get('indexJobs', '/primer-proyecto-php/jobs', [
     'controller' => 'App\Controllers\JobsController',
-    'action' => 'getAddjobAction'
+    'action' => 'indexAction'
+]);
+$map->get('addJobs', '/primer-proyecto-php/jobs/delete', [
+    'controller' => 'App\Controllers\JobsController',
+    'action' => 'deleteAction'
+]);
+$map->get('deleteJobs', '/primer-proyecto-php/jobs', [
+    'controller' => 'App\Controllers\JobsController',
+    'action' => 'indexAction'
 ]);
 $map->post('saveJobs', '/primer-proyecto-php/jobs/add', [
     'controller' => 'App\Controllers\JobsController',
@@ -93,22 +101,6 @@ $map->get('admin', '/primer-proyecto-php/admin', [
 $matcher = $routerContainer->getMatcher();
 $route = $matcher->match($request);
 
-function printElement($job){
-    // if(!$job->visible){
-    //   return;
-    // }
-    echo '<li class="work-position">';
-    echo '<h5>' . $job->title . '</h5>';
-    echo '<p>' . $job->description . '</p>';
-    echo '<p>' . $job->getDurationAsString() . '</p>';
-    echo '<strong>Achievements:</strong>';
-    echo '<ul>';
-    echo '<li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>';
-    echo '<li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>';
-    echo '<li>Lorem ipsum dolor sit amet, 80% consectetuer adipiscing elit.</li>';
-    echo '</ul>';
-    echo '</li>';
-}
 
 if(!$route){
     echo 'No route!!';
@@ -121,15 +113,21 @@ if(!$route){
     
     $sesionUserId = $_SESSION['userId'] ?? false;
     var_dump($sesionUserId);    // ! Verificando la sesion
-    if ($needsAuth && !$sesionUserId){
+    if ($needsAuth && !$sesionUserId) {
         echo 'Protected route';
         die;
     }
+
+//    if ($controllerName === 'App\Controllers\JobsController') {
+//        $controller = new $controllerName(new \App\Services\JobService());
+//    } else {
+//        $controller = new $controllerName;
+//    }
+    $controller = $container->get($controllerName);
     
-    $controller = new $controllerName;
-    // *$controller->$actionName($request);
+
     $response = $controller->$actionName($request);
-    // var_dump( $route->handler );
+
     foreach($response->getHeaders() as $name => $values){
         foreach($values as $value){
             header(sprintf('%s: %s', $name, $value), false);
@@ -138,5 +136,3 @@ if(!$route){
     http_response_code($response->getStatusCode());
     echo $response->getBody();
 }
-// var_dump($route->handler);
-// var_dump($route);
