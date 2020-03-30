@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "32cc933cb0ed83becc790594c8a1de92",
+    "content-hash": "5a35220bc5a198a4844897b7fa819600",
     "packages": [
         {
             "name": "aura/router",
@@ -861,6 +861,112 @@
             "time": "2016-08-06T14:39:51+00:00"
         },
         {
+            "name": "psr/http-server-handler",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-server-handler.git",
+                "reference": "aff2f80e33b7f026ec96bb42f63242dc50ffcae7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-server-handler/zipball/aff2f80e33b7f026ec96bb42f63242dc50ffcae7",
+                "reference": "aff2f80e33b7f026ec96bb42f63242dc50ffcae7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0",
+                "psr/http-message": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Server\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP server-side request handler",
+            "keywords": [
+                "handler",
+                "http",
+                "http-interop",
+                "psr",
+                "psr-15",
+                "psr-7",
+                "request",
+                "response",
+                "server"
+            ],
+            "time": "2018-10-30T16:46:14+00:00"
+        },
+        {
+            "name": "psr/http-server-middleware",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/http-server-middleware.git",
+                "reference": "2296f45510945530b9dceb8bcedb5cb84d40c5f5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/http-server-middleware/zipball/2296f45510945530b9dceb8bcedb5cb84d40c5f5",
+                "reference": "2296f45510945530b9dceb8bcedb5cb84d40c5f5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0",
+                "psr/http-message": "^1.0",
+                "psr/http-server-handler": "^1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Http\\Server\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for HTTP server-side middleware",
+            "keywords": [
+                "http",
+                "http-interop",
+                "middleware",
+                "psr",
+                "psr-15",
+                "psr-7",
+                "request",
+                "response"
+            ],
+            "time": "2018-10-30T17:12:04+00:00"
+        },
+        {
             "name": "psr/log",
             "version": "1.1.2",
             "source": {
@@ -1504,6 +1610,75 @@
                 "environment"
             ],
             "time": "2020-03-27T23:37:15+00:00"
+        },
+        {
+            "name": "woohoolabs/harmony",
+            "version": "7.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/woohoolabs/harmony.git",
+                "reference": "58f2a9e45b5eb24c355cc30fd3bc1e2484d437c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/woohoolabs/harmony/zipball/58f2a9e45b5eb24c355cc30fd3bc1e2484d437c3",
+                "reference": "58f2a9e45b5eb24c355cc30fd3bc1e2484d437c3",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4.0",
+                "psr/container": "^1.0.0",
+                "psr/http-message-implementation": "^1.0.0",
+                "psr/http-server-handler": "^1.0.0",
+                "psr/http-server-middleware": "^1.0.0"
+            },
+            "provide": {
+                "psr/container-implementation": "^1.0",
+                "psr/http-server-handler": "^1.0"
+            },
+            "require-dev": {
+                "laminas/laminas-diactoros": "^2.0.0",
+                "laminas/laminas-httphandlerrunner": "^1.1.0",
+                "nikic/fast-route": "^1.0.0",
+                "phpstan/phpstan": "^0.12.0",
+                "phpstan/phpstan-phpunit": "^0.12.0",
+                "phpstan/phpstan-strict-rules": "^0.12.0",
+                "phpunit/phpunit": "^8.3.4",
+                "squizlabs/php_codesniffer": "^3.5.0",
+                "woohoolabs/coding-standard": "^2.1.1",
+                "woohoolabs/releaser": "^1.2.0"
+            },
+            "suggest": {
+                "laminas/laminas-httphandlerrunner": "Allows to use the default HTTP response emitter middleware",
+                "nikic/fast-route": "Allows to use the default router middleware"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "WoohooLabs\\Harmony\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Máté Kocsis",
+                    "email": "kocsismate@woohoolabs.com"
+                }
+            ],
+            "description": "Woohoo Labs. Harmony",
+            "keywords": [
+                "Harmony",
+                "Middleware Dispatcher",
+                "PSR-11",
+                "Woohoo Labs.",
+                "framework",
+                "psr-15",
+                "psr-7"
+            ],
+            "time": "2020-01-06T22:11:15+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
