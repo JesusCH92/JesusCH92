@@ -104,8 +104,15 @@ $map->post('auth', '/primer-proyecto-php/auth', [
 ]);
 $map->get('admin', '/primer-proyecto-php/admin', [
     'App\Controllers\AdminController',
-    'getIndex',
-//    'auth' => true
+    'getIndex'
+]);
+$map->get('contactForm', '/primer-proyecto-php/contact', [
+    'App\Controllers\ContactController',
+    'index'
+]);
+$map->post('contactSend', '/primer-proyecto-php/contact/send', [
+    'App\Controllers\ContactController',
+    'send'
 ]);
 
 $matcher = $routerContainer->getMatcher();
