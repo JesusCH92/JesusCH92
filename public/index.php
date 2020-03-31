@@ -1,15 +1,17 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_starup_error', 1);
-error_reporting(E_ALL);
-
 require_once '../vendor/autoload.php';
 
 session_start(); // ! Iniciamos la sesion
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
+
+if (getenv('DEBUG') === 'true') {
+    ini_set('display_errors', 1);
+    ini_set('display_starup_error', 1);
+    error_reporting(E_ALL);
+}
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Aura\Router\RouterContainer;
@@ -116,15 +118,20 @@ if(!$route){
     try{
         $harmony = new Harmony($request, new Response());
         $harmony
-            ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
-            ->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware())
-            ->addMiddleware(new \App\Middlewares\AuthenticationMiddleware())    // ! Añadimos nuestro Middleware
+            ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()));
+        if (getenv('DEBUG') === 'true') {
+            $harmony
+                ->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware());
+        }
+//            ->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware())
+        $harmony->addMiddleware(new \App\Middlewares\AuthenticationMiddleware())    // ! Añadimos nuestro Middleware
             ->addMiddleware(new \Middlewares\AuraRouter($routerContainer))
             ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
             ->run();
-//    } catch (Exception $e) {
-//        $emitter = new SapiEmitter();
-//        $emitter->emit(new Response\EmptyResponse(400));
+    } catch (Exception $e) {
+        $log->warning($e->getMessage());
+        $emitter = new SapiEmitter();
+        $emitter->emit(new Response\EmptyResponse(400));
     } catch (Error $e) {
         $emitter = new SapiEmitter();
         $emitter->emit(new Response\EmptyResponse(500));
