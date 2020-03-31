@@ -114,13 +114,14 @@ if(!$route){
         $harmony = new Harmony($request, new Response());
         $harmony
             ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
+            ->addMiddleware(new \Franzl\Middleware\Whoops\WhoopsMiddleware())
             ->addMiddleware(new \App\Middlewares\AuthenticationMiddleware())    // ! Añadimos nuestro Middleware
             ->addMiddleware(new \Middlewares\AuraRouter($routerContainer))
             ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
             ->run();
-    } catch (Exception $e) {
-        $emitter = new SapiEmitter();
-        $emitter->emit(new Response\EmptyResponse(400));
+//    } catch (Exception $e) {
+//        $emitter = new SapiEmitter();
+//        $emitter->emit(new Response\EmptyResponse(400));
     } catch (Error $e) {
         $emitter = new SapiEmitter();
         $emitter->emit(new Response\EmptyResponse(500));
