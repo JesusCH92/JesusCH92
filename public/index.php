@@ -13,13 +13,16 @@ $dotenv->load();
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Aura\Router\RouterContainer;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use WoohooLabs\Harmony\Harmony;
 use WoohooLabs\Harmony\Middleware\LaminasEmitterMiddleware;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use Zend\Diactoros\Response;
 use WoohooLabs\Harmony\Middleware\DispatcherMiddleware;
 
-
+$log = new Logger('app');  // ! Monolog-> Log Channel
+$log->pushHandler(new StreamHandler(__DIR__ . '/../logs/app.log', Logger::WARNING));
 $container = new DI\Container();    // ! Contenedor de inyeccion de dependecias
 $capsule = new Capsule;
 
