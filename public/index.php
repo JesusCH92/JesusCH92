@@ -65,13 +65,13 @@ $map->get('indexJobs', '/primer-proyecto-php/jobs', [
     'App\Controllers\JobsController',
     'indexAction'
 ]);
-$map->get('addJobs', '/primer-proyecto-php/jobs/delete', [
+$map->get('deleteJobs', '/primer-proyecto-php/jobs/delete', [
     'App\Controllers\JobsController',
     'deleteAction'
 ]);
-$map->get('deleteJobs', '/primer-proyecto-php/jobs', [
+$map->get('addJobs', '/primer-proyecto-php/jobs/add', [
     'App\Controllers\JobsController',
-    'indexAction'
+    'getAddJobAction'
 ]);
 $map->post('saveJobs', '/primer-proyecto-php/jobs/add', [
     'App\Controllers\JobsController',
@@ -87,7 +87,7 @@ $map->post('saveUser', '/primer-proyecto-php/users/save', [
 ]);
 $map->get('loginForm', '/primer-proyecto-php/login', [
     'App\Controllers\AuthController',
-    'action' => 'getLogin'
+    'getLogin'
 ]);
 $map->get('logout', '/primer-proyecto-php/logout', [
     'App\Controllers\AuthController',
@@ -100,7 +100,7 @@ $map->post('auth', '/primer-proyecto-php/auth', [
 $map->get('admin', '/primer-proyecto-php/admin', [
     'App\Controllers\AdminController',
     'getIndex',
-    'auth' => true
+//    'auth' => true
 ]);
 
 $matcher = $routerContainer->getMatcher();
@@ -110,23 +110,21 @@ $route = $matcher->match($request);
 if(!$route){
     echo 'No route!!';
 }else{
-//    $handlerData = $route->handler;
-//// *array(2) { ["controller"]=> string(31) "App\Controllers\IndexController" ["action"]=> string(11) "indexAction" }
-//    $controllerName = $handlerData['controller'];
-//    $actionName = $handlerData['action'];
-//    $needsAuth = $handlerData['auth'] ?? false; // !Si existe 'auth'
-//
-//    $sesionUserId = $_SESSION['userId'] ?? false;
-//    var_dump($sesionUserId);    // ! Verificando la sesion
-//    if ($needsAuth && !$sesionUserId) {
-//        echo 'Protected route';
-//        die;
-//    }
-    $harmony = new Harmony($request, new Response());
-    $harmony
-        ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
-        ->addMiddleware(new \Middlewares\AuraRouter($routerContainer))
-        ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
-        ->run();
+    try{
+        $harmony = new Harmony($request, new Response());
+        $harmony
+            ->addMiddleware(new LaminasEmitterMiddleware(new SapiEmitter()))
+            ->addMiddleware(new \App\Middlewares\AuthenticationMiddleware())    // ! Añadimos nuestro Middleware
+            ->addMiddleware(new \Middlewares\AuraRouter($routerContainer))
+            ->addMiddleware(new DispatcherMiddleware($container, 'request-handler'))
+            ->run();
+    } catch (Exception $e) {
+        $emitter = new SapiEmitter();
+        $emitter->emit(new Response\EmptyResponse(400));
+    } catch (Error $e) {
+        $emitter = new SapiEmitter();
+        $emitter->emit(new Response\EmptyResponse(500));
+    }
+
 
 }
