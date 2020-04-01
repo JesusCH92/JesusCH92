@@ -31,9 +31,9 @@ class CreateUserCommand extends Command
 
         if ( $input->getArgument('password') ) {
             $user->password = password_hash($input->getArgument('password'), PASSWORD_DEFAULT);
+        } else {
+            $user->password = password_hash('admin', PASSWORD_DEFAULT);
         }
-
-        $user->password = password_hash('admin', PASSWORD_DEFAULT);
 
         $user->save();
         $output->writeln('Done.');
