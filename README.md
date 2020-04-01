@@ -4,3 +4,6 @@ Ejecutar el comandos:
 
 $vendor/bin/phinx migrate
 
+>>> Para volver atras si no me gustan la tabla:~
+
+vendor/bin/phinx rollback
