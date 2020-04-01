@@ -51,6 +51,7 @@ class __TwigTemplate_837722e269318e31753f7d91cac320f7f1fc844af636881ff205fe943fa
 <ul>
     <li><a href=\"/primer-proyecto-php/users/add\">Add users</a></li>
     <li><a href=\"/primer-proyecto-php/jobs/add\">Add Jobs</a></li>
+    <li><a href=\"/primer-proyecto-php/changePassword\">Change your password</a></li>
 </ul>
 <a href=\"/primer-proyecto-php/logout\">Logout</a>
 ";
@@ -80,6 +81,7 @@ class __TwigTemplate_837722e269318e31753f7d91cac320f7f1fc844af636881ff205fe943fa
 <ul>
     <li><a href=\"/primer-proyecto-php/users/add\">Add users</a></li>
     <li><a href=\"/primer-proyecto-php/jobs/add\">Add Jobs</a></li>
+    <li><a href=\"/primer-proyecto-php/changePassword\">Change your password</a></li>
 </ul>
 <a href=\"/primer-proyecto-php/logout\">Logout</a>
 {% endblock %}", "admin.twig", "C:\\xampp\\htdocs\\primer-proyecto-php\\views\\admin.twig");

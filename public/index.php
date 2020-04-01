@@ -106,6 +106,15 @@ $map->get('admin', '/primer-proyecto-php/admin', [
     'App\Controllers\AdminController',
     'getIndex'
 ]);
+// ! Reto:
+$map->get('changePassword', '/primer-proyecto-php/changePassword', [
+    'App\Controllers\ResetPasswordController',
+    'changePassword'
+]);
+$map->post('resetPassword', '/primer-proyecto-php/resetPassword', [
+    'App\Controllers\ResetPasswordController',
+    'resetPassword'
+]);
 $map->get('contactForm', '/primer-proyecto-php/contact', [
     'App\Controllers\ContactController',
     'index'
